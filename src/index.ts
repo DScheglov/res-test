@@ -42,7 +42,7 @@ type PersonValidationError = ValidationError<
   | 'ERR_EMPTY_STRING'
 >;
 
-const okIfPerson1 = (value: unknown): Result<Person, PersonValidationError> =>
+export const okIfPerson1 = (value: unknown) =>
   Do(function*() {
     const object = yield* okIfObject(value).mapErr(
       error => validationError([], error)
@@ -59,10 +59,10 @@ const okIfPerson1 = (value: unknown): Result<Person, PersonValidationError> =>
     return { name, age };
   });
 
-const okIfPerson2 = (
+export const okIfPerson2 = (
   value: unknown,
   path: string[] = ['person'],
-): Result<Person, PersonValidationError> =>
+) =>
   Do(function* okIfPersonJob() {
     const obj = yield* okIfObject(value)
       .mapErr(error => validationError(path, error));
